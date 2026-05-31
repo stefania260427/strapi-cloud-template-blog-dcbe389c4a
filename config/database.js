@@ -1,8 +1,12 @@
 const path = require('path');
 
+/**
+ * @param {{ env: any }} params
+ */
 module.exports = ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
+  /** @type {Record<string, any>} */
   const connections = {
     mysql: {
       connection: {
