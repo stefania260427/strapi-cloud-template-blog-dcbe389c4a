@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
-  "type": "module",
- "scripts": {
-    "build": "strapi clean && strapi build",
+  "scripts": {
+    "build": "strapi build",
     "deploy": "strapi deploy",
     "develop": "strapi develop",
     "seed:example": "node ./scripts/seed.js",
