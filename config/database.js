@@ -34,14 +34,7 @@ module.exports = ({ env }) => {
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
-        },
+        ssl: env.bool('DATABASE_SSL', true) ? { rejectUnauthorized: false } : false,
         schema: env('DATABASE_SCHEMA', 'public'),
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
@@ -54,20 +47,11 @@ module.exports = ({ env }) => {
     },
   };
 
-return {
+  return {
     connection: {
       client,
       ...connections[client],
-      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 90000),
-      pool: {
-        min: env.int('DATABASE_POOL_MIN', 2),
-        max: env.int('DATABASE_POOL_MAX', 10),
-        createTimeoutMillis: 30000,
-        acquireTimeoutMillis: 90000,
-        idleTimeoutMillis: 30000,
-        reapIntervalMillis: 1000,
-        createRetryIntervalMillis: 200,
-      }
+      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
     },
   };
 };
